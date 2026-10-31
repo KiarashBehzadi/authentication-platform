@@ -1,10 +1,9 @@
 package io.github.kia.model;
 
-import java.util.UUID;
 
 public class User {
 
-    private UUID id;
+    private Long id;
     private String username;
     private String password;
     private String email;
@@ -13,7 +12,7 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String username, String password, String email, String phoneNumber) {
+    public User(Long id, String username, String password, String email, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -21,11 +20,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
