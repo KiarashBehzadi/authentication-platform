@@ -1,5 +1,6 @@
 package io.github.kia.redis;
 
+import io.github.kia.model.OtpPurpose;
 import io.github.kia.repository.OtpRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,25 +20,26 @@ public class RedisOtpRepository implements OtpRepository {
 
 
     @Override
-    public void saveOtp(String phoneNumber, String otp) {
+    public void saveOtp(String phoneNumber, OtpPurpose purpose, String otp) {
         redisTemplate.opsForValue().
-                set("otp:" + phoneNumber,
+                set("otp:" + purpose.name() + ":" + phoneNumber,
                 otp,
                 Duration.ofMinutes(2));
     }
 
     @Override
-    public Optional<String> getOtp(String phoneNumber) {
+    public Optional<String> getOtp(String phoneNumber, OtpPurpose purpose) {
         return Optional.ofNullable(
                 redisTemplate
                         .opsForValue()
-                        .get("otp:" + phoneNumber));
+                        .get("otp:" + purpose.name() + ":" + phoneNumber));
     }
 
     @Override
-    public void deleteOtp(String phoneNumber) {
-        redisTemplate.delete(phoneNumber);
+    public void deleteOtp(String phoneNumber, OtpPurpose purpose) {
+        redisTemplate.delete("otp:" + purpose.name() + ":" + phoneNumber);
     }
+
 
     /*
          where is this class ??
